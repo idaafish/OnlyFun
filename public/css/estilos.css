@@ -5,7 +5,7 @@ body {
 }
 
 .header {
-    background-color: red;
+    background-color: rgba(212, 25, 25, 0.464);
     color: white;
     padding: 10px;
 }
@@ -19,12 +19,14 @@ body {
     width: 70%;
     background-color: red;
     padding: 10px;
+    
 }
 
 .right-div {
     width: 30%;
     background-color: black;
     padding: 10px;
+    
 }
 
 .footer {
@@ -32,3 +34,27 @@ body {
     color: white;
     padding: 10px;
 }
+
+
+/* CSS del links */
+
+.left-div {
+    background-color: black;
+    color: white;
+  }
+  
+  .left-div p {
+    color: white;
+  }
+  
+  .left-div ul li {
+    color: white;
+  }
+  
+  .left-div ul li a {
+    color: white;
+  }
+  
+  .left-div ul li a:hover {
+    color: gray;
+  }

@@ -1,16 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello VideoController!{% endblock %}
+{% block title %}OnlyFun{% endblock %}
 
-{% block body %}
-    <div class="content">
+{% block bodyIz %}
         <div class="left-div">
+            <p>{{ controller_name }}</p>
             <p>Contenido del div izquierdo (70%)</p>
-        </div>
-        <div class="right-div">
-            <p>Contenido del div derecho (30%)</p>
-        </div>
-    </div>
 
+             <ul>
+                <li><code><a href="{{ path('crearVideo') }}">Crea Video</a></code></li>
+            </ul>
 
+            <ul>
+                <li><p>Video : {{ video.nombre }}</p></li>
+                <li><p>Url : {{ video.Url }}</p></li>
+                <li><p>Descripcion : {{ video.descripcion }}</p></li>
+                <li><p>Categoria :</p></li>
+                <li><p>Mensage :{{ mensage  }}</p></li>
+
+            </ul>
+        </div>       
 {% endblock %}

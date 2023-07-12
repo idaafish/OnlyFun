@@ -15,9 +15,21 @@
            <header>
                 <h1>OnlyFun</h1>
            </header>
-        {% block body %}{% endblock %}
+        <div class="content">
+            {% block bodyIz %}{% endblock %}
+            {% block bodyDe %}
+            <div class="right-div">
+                <ul>
+                    <li><code><a href="{{ path('user') }}">Usuario</a></code></li>
+                    <li><code><a href="{{ path('categoria') }}">Categoria</a></code></li>
+                    <li><code><a href="{{ path('video') }}">Video</a></code></li>
+                    <li><code><a href="{{ path('pagos') }}">Pagos</a></code></li>    
+                </ul>
+            </div>
+            {% endblock %}
+        </div>
     </body>
     <footer>
-        <p>Esto es el footer</p>
+        <p>Footer</p>
     </footer>
 </html>

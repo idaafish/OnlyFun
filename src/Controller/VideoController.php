@@ -57,24 +57,25 @@ class VideoController extends AbstractController
         // ejecutamos la query, por ejemplo, el insertar. 
         $this->em->flush();
 
-        /*for ($i = 0; $i < rand(1,10); $i++) { 
+        for ($i = 0; $i < rand(1,10); $i++) { 
             // inicializamos el video categoria y categoria
             $videoCategoria = new VideoCategoria();
             $categoria = new Categoria();
             
             //recuperamos la categoria a partir de un ID
-            $categoria = $this->em->getRepository(Categoria::class)->find(rand(1,10));
-            $videoCategoria->setCategoriaId($categoria);
+            $categoria = $this->em->getRepository(Categoria::class)->find($i+1);
+            var_dump($categoria);
+            $videoCategoria->setCategoria($categoria);
 
             // seteamos el video en categoria Video
-            $videoCategoria->setVideoId($video);
+            $videoCategoria->setVideo($video);
 
             //persistimos
             $this->em->persist($videoCategoria);
 
             // ejecutamos la query, por ejemplo, el insertar. 
             $this->em->flush();
-        }  */        
+        }          
         return $this->render('video/index.html.twig', [
             'controller_name' => "la video es ".$video->getNombre(),
             'video' => $video,

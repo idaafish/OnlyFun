@@ -21,8 +21,15 @@ class CategoriaController extends AbstractController
     #[Route('/categoria', name: 'categoria')]
     public function index(): Response
     {
+        // creamos obj Categoria
+        $categoria = new Categoria();
+        $categoria->setNombre("");
+
+
         return $this->render('categoria/index.html.twig', [
             'controller_name' => 'CategoriaController',
+            'categoria' => $categoria,
+            'mensage' => $this->oKKo
         ]);
     }
 
@@ -46,7 +53,7 @@ class CategoriaController extends AbstractController
 
        
         return $this->render('categoria/index.html.twig', [
-            'controller_name' => "Guarda el Categoria  ".$categoria->getNombre(),
+            'controller_name' => "Guarda la Categoria  ".$categoria->getNombre(),
             'categoria' => $categoria,
             'mensage' => $this->oKKo
        ]);

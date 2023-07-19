@@ -13,39 +13,39 @@ class VideoCategoria
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?video $videoId = null;
+    private ?video $video = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?categoria $categoriaId = null;
+    private ?categoria $categoria = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getVideoId(): ?video
+    public function getVideo(): ?video
     {
-        return $this->videoId;
+        return $this->video;
     }
 
-    public function setVideoId(video $videoId): static
+    public function setVideo(?video $video): static
     {
-        $this->videoId = $videoId;
+        $this->video = $video;
 
         return $this;
     }
 
-    public function getCategoriaId(): ?categoria
+    public function getCategoria(): ?categoria
     {
-        return $this->categoriaId;
+        return $this->categoria;
     }
 
-    public function setCategoriaId(categoria $categoriaId): static
+    public function setCategoria(?categoria $categoria): static
     {
-        $this->categoriaId = $categoriaId;
+        $this->categoria = $categoria;
 
         return $this;
     }

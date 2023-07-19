@@ -13,39 +13,39 @@ class VideoUser
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $userId = null;
+    private ?video $video = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Video $videoId = null;
+    private ?user $user = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUserId(): ?User
+    public function getVideo(): ?video
     {
-        return $this->userId;
+        return $this->video;
     }
 
-    public function setUserId(User $userId): static
+    public function setVideo(?video $video): static
     {
-        $this->userId = $userId;
+        $this->video = $video;
 
         return $this;
     }
 
-    public function getVideoId(): ?Video
+    public function getUser(): ?user
     {
-        return $this->videoId;
+        return $this->user;
     }
 
-    public function setVideoId(Video $videoId): static
+    public function setUser(?user $user): static
     {
-        $this->videoId = $videoId;
+        $this->user = $user;
 
         return $this;
     }

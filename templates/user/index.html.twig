@@ -6,5 +6,14 @@
         <div class="left-div">
             <p>User</p>
             <p>Contenido del div izquierdo (70%)</p>
-        </div>       
+
+            <ul>
+                <li><code><a href="{{ path('crearUser') }}">Crea Usuario</a></code></li>
+            </ul>
+
+            <ul>
+                <li><p>nombre : {{ user.nombre }}</p></li>
+                <li><p>id : {{ user.id }}</p></li>
+            </ul>
+        </div>        
 {% endblock %}

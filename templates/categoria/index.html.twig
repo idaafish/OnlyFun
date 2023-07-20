@@ -5,12 +5,32 @@
 {% block bodyIz %}
         <div class="left-div">
             <ul>
-                <li><code><a href="{{ path('crearCategoria') }}">Crea Categoria</a></code></li>
-            </ul>
-
-            <ul>
+                <li>Categoria</li>
                 <li><p>categoria : {{ categoria.nombre }}</p></li>
                 <li><p>id : {{ categoria.id }}</p></li>
             </ul>
         </div>       
+{% endblock %}
+{% block bodyDe %}
+    <div class="right-div" id="2">
+        <a href="{{ path('crearUser') }}" >
+        <button>CA</button>
+        </a>
+        <BR><BR>
+        <form action="{{ path('mostrarUser') }}" method="POST">
+            MA
+            <input class="inputId" type="text" id="id" name="id" required>
+            <input type="submit" value="Enviar">
+        </form><BR>
+        <form action="{{ path('cambiarUser') }}" method="POST">
+            CA
+            <input class="inputId" type="text" id="id" name="id" required>
+            <input type="submit" value="Enviar">
+        </form><BR>
+        <form action="{{ path('borrarUser') }}" method="POST">
+           BA
+            <input class="inputId" type="text" id="id" name="id" required>
+            <input type="submit" value="Enviar">
+        </form>
+    </div>
 {% endblock %}

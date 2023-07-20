@@ -3,13 +3,34 @@
 {% block title %}OnlyFun{% endblock %}
 
 {% block bodyIz %}
-        <div class="left-div">
+        <div class="left-div" id="1">
             <ul>
-                <li><code><a href="{{ path('crearUser') }}">Crea Usuario</a></code></li>
-            </ul>
-
-            <ul>
+                <li>Usuario</li>
+                <li><p>id : {{ user.id }}</p></li>
                 <li><p>nombre : {{ user.nombre }}</p></li>
             </ul>
         </div>        
+{% endblock %}
+{% block bodyDe %}
+    <div class="right-div" id="2">
+        <a href="{{ path('crearUser') }}" target="_blank">
+        <button>CU</button>
+        </a>
+        <BR><BR>
+        <form action="{{ path('mostrarUser') }}" method="POST">
+            MU
+            <input class="inputId" type="text" id="id" name="id" required>
+            <input type="submit" value="Enviar">
+        </form><BR>
+        <form action="{{ path('cambiarUser') }}" method="POST">
+            CU
+            <input class="inputId" type="text" id="id" name="id" required>
+            <input type="submit" value="Enviar">
+        </form><BR>
+        <form action="{{ path('borrarUser') }}" method="POST">
+           BU
+            <input class="inputId" type="text" id="id" name="id" required>
+            <input type="submit" value="Enviar">
+        </form>
+    </div>
 {% endblock %}

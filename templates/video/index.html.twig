@@ -14,3 +14,26 @@
             </ul>
         </div>       
 {% endblock %}
+{% block bodyDe %}
+    <div class="right-div" id="2">
+        <a href="{{ path('crearVideo') }}" >
+        <button>CV</button>
+        </a>
+        <BR><BR>
+        <form action="{{ path('mostrarVideo') }}" method="POST">
+            MV
+            <input class="inputId" type="text" id="id" name="id" required>
+            <input type="submit" value="Enviar">
+        </form><BR>
+        <form action="{{ path('cambiarVideo') }}" method="POST">
+            CV
+            <input class="inputId" type="text" id="id" name="id" required>
+            <input type="submit" value="Enviar">
+        </form><BR>
+        <form action="{{ path('borrarVideo') }}" method="POST">
+           BV
+            <input class="inputId" type="text" id="id" name="id" required>
+            <input type="submit" value="Enviar">
+        </form>
+    </div>
+{% endblock %}

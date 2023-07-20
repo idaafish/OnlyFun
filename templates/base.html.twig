@@ -5,18 +5,96 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="stylesheet" type="text/css" href="css/estilos.css">
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+
         {% block stylesheets %}
-        {% endblock %}
+        <style>
+            /* Estilos generales */
+            body {
+                background-color: black;
+                color: white;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+            }
+
+            /* Estilos para el header */
+            header {
+                background-color: black;
+                color: white;
+                padding: 10px;
+            }
+
+            header h1 {
+                margin: 0;
+            }
+
+            header ul {
+                list-style: none;
+                display: flex;
+                justify-content: center;
+                padding: 0;
+            }
+
+            header li {
+                margin-right: 20px;
+            }
+
+            header a {
+                color: white;
+                text-decoration: none;
+            }
+
+            header a:hover {
+                color: gray;
+            }
+
+            /* Estilos para el contenido */
+            .content {
+                display: flex;
+                width: 100%;
+            }
+
+            .bodyIz {
+                width: 70%;
+                background-color: black;
+                padding: 10px;
+            }
+
+            .bodyDe {
+                width: 30%;
+                background-color: black;
+                padding: 10px;
+            }
+
+            /* Estilos para el footer */
+            footer {
+                background-color: black;
+                color: white;
+                padding: 10px;
+            }
+
+            /* Otros estilos */
+            #inputId {
+                size: 50px;
+            }
+        </style>
+    {% endblock %}
 
         {% block javascripts %}
         {% endblock %}
     </head>
     <body>
-           <header>
-                <h1>OnlyFun</h1>
-           </header>
-        <div class="content">
-            {% block bodyIz %}{% endblock %}
+        <header>
+            <h1>OnlyFun</h1>
+            <a href="{{ path('user') }}"> Usuario </a>-
+            <a href="{{ path('categoria') }}"> Categoria </a>-
+            <a href="{{ path('video') }}"> Video </a>-
+            <a href="{{ path('pagos') }}"> Pagos </a>    
+            </ul>
+        </header>
+        <div class="content" id="0">
+            {% block bodyIz %}
+            {% endblock %}
             {% block bodyDe %}
             {% endblock %}
         </div>

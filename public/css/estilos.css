@@ -35,26 +35,3 @@ body {
     padding: 10px;
 }
 
-
-/* CSS del links */
-
-.left-div {
-    background-color: black;
-    color: white;
-  }
-  
-  .left-div p {
-    color: white;
-  }
-  
-  .left-div ul li {
-    color: white;
-  }
-  
-  .left-div ul li a {
-    color: white;
-  }
-  
-  .left-div ul li a:hover {
-    color: gray;
-  }

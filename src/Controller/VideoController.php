@@ -64,7 +64,6 @@ class VideoController extends AbstractController
             
             //recuperamos la categoria a partir de un ID
             $categoria = $this->em->getRepository(Categoria::class)->find($i+1);
-            var_dump($categoria);
             $videoCategoria->setCategoria($categoria);
 
             // seteamos el video en categoria Video

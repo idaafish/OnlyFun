@@ -5,11 +5,12 @@ namespace App\Controller;
 use App\Entity\Video;
 use App\Entity\Categoria;
 use App\Entity\VideoCategoria;
+use App\DTO\VideoViewModel;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 class VideoController extends AbstractController
 {
@@ -25,16 +26,11 @@ class VideoController extends AbstractController
     #[Route('/video', name: 'video')]
     public function index(): Response
     {
-        $video = new Video();
- 
-        //rellenamos valores
-        $video->setNombre("");
-        $video->setDescripcion("");
-        $video->setUrl("");
+        $videoVista = new VideoViewModel(0,"","","","","");
 
         return $this->render('video/index.html.twig', [
             'controller_name' => 'VideoController',
-            'video' => $video,
+            'video' => $videoVista,
             'mensage' => $this->oKKo
         ]);
     }
@@ -58,6 +54,7 @@ class VideoController extends AbstractController
         // ejecutamos la query, por ejemplo, el insertar. 
         $this->em->flush();
 
+        
         for ($i = 0; $i < rand(1,10); $i++) { 
             // inicializamos el video categoria y categoria
             $videoCategoria = new VideoCategoria();
@@ -75,10 +72,20 @@ class VideoController extends AbstractController
 
             // ejecutamos la query, por ejemplo, el insertar. 
             $this->em->flush();
-        }          
+        }   
+        
+        $videoVista = new VideoViewModel(
+            $video->getId(),
+            $video->getNombre(),
+            $video->getUrl(),
+            $video->getDescripcion(),
+            "categoria 1, categoria 2",
+            "usuario 1"
+        );
+
         return $this->render('video/index.html.twig', [
             'controller_name' => "la video es ".$video->getNombre(),
-            'video' => $video,
+            'video' => $videoVista,
             'mensage' => $this->oKKo
         ]);
      }

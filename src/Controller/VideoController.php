@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 class VideoController extends AbstractController
 {
@@ -74,6 +76,8 @@ class VideoController extends AbstractController
             $this->em->flush();
         }   
         
+        //TODO recuperar categorias y usuarios por video
+        
         $videoVista = new VideoViewModel(
             $video->getId(),
             $video->getNombre(),
@@ -84,91 +88,140 @@ class VideoController extends AbstractController
         );
 
         return $this->render('video/index.html.twig', [
-            'controller_name' => "la video es ".$video->getNombre(),
+            'controller_name' => "la video es ".$videoVista->getNombre(),
             'video' => $videoVista,
             'mensage' => $this->oKKo
         ]);
      }
 
-     #[Route('/mostrarVideo/{request,id}', name: 'mostrarVideo')]
-     public function show(Request $request): Response
-     {
-         $idRequest=$request->request->get('id');
-         // creamos obj Video
-         $video = new Video();
+    #[Route('/mostrarVideo/{request,id}', name: 'mostrarVideo')]
+    public function show(Request $request): Response
+    {
+        $idRequest=$request->request->get('id');
+        // creamos obj Video
+        $video = new Video();
  
-         //recuperamos el video
-         $video = $this->em->getRepository(Video::class)->find($idRequest);
+        //recuperamos el video
+        $video = $this->em->getRepository(Video::class)->find($idRequest);
+          // validamos que citas venga relleno
  
-         // validamos que citas venga relleno
-         if (!$video) {
-             throw $this->createNotFoundException('No se encontró el usuario con el ID: '.$idRequest);
-         } 
+        if (!$video) {
+            throw $this->createNotFoundException('No se encontró el usuario con el ID: '.$idRequest);
+        } 
+        
+        // recuperamos las cayegorias
+        $categorias = $this->findCategoriasPersonalizadas($video->getId());
+
+        // Ahora puedes convertir los resultados en un array de categorías si es necesario
+        $categoriasArray = [];
+        $categoriasString ="";
+        foreach ($categorias as $categoria) {
+            $categoriasArray[] = [
+                'id' => $categoria->getId(),
+                'nombre' => $categoria->getNombre(),
+                // Otros campos de la entidad que desees incluir en el array
+
+            ];
+            $categoriasString = $categoriasString+" "+$categoria->getNombre()+ " ,";
+        } 
+
+        $videoVista = new VideoViewModel(
+           $video->getId(),
+           $video->getNombre(),
+           $video->getUrl(),
+           $video->getDescripcion(),
+           $categoriasArray[],
+           "usuario 1"
+        );
  
         
-         return $this->render('video/index.html.twig', [
-             'controller_name' => "Guarda el Video  ".$video->getNombre(),
-             'video' => $video,
-             'mensage' => $this->oKKo
+        return $this->render('video/index.html.twig', [
+            'controller_name' => "Guarda el Video  ".$videoVista->getNombre(),
+            'video' => $videoVista,
+            'mensage' => $this->oKKo
         ]);
-     }
+    }
  
-     #[Route('/cambiarVideo/{request,id}', name: 'cambiarVideo')]
-     public function update(Request $request): Response
-     {
-         $idRequest=$request->request->get('id');
-         // creamos obj Video
-         $video = new Video();
+    #[Route('/cambiarVideo/{request,id}', name: 'cambiarVideo')]
+    public function update(Request $request): Response
+    {
+        $idRequest=$request->request->get('id');
+        // creamos obj Video
+        $video = new Video();
+        //recuperamos el video
+        $video = $this->em->getRepository(Video::class)->find($idRequest);
  
-         //recuperamos el video
-         $video = $this->em->getRepository(Video::class)->find($idRequest);
+        // validamos que citas venga relleno
+        if (!$video) {
+            throw $this->createNotFoundException('No se encontró el video con el ID: '.$idRequest);
+        } else {
  
-         // validamos que citas venga relleno
-         if (!$video) {
-             throw $this->createNotFoundException('No se encontró el video con el ID: '.$idRequest);
-         } else {
+            //modificamos
+            $video->setNombre("Nombre MODIFICADO");
  
-             //modificamos
-             $video->setNombre("Nombre MODIFICADO");
- 
-             //persistimos
-             $this->em->persist($video);
+            //persistimos
+            $this->em->persist($video);
      
-               // ejecutamos la query, por ejemplo, el insertar. 
-             $this->em->flush();
-         }
+            // ejecutamos la query, por ejemplo, el insertar. 
+            $this->em->flush();
+        }
         
-         return $this->render('video/index.html.twig', [
-             'controller_name' => "Guarda el Video  ".$video->getNombre(),
-             'video' => $video,
+        $videoVista = new VideoViewModel(
+           $video->getId(),
+           $video->getNombre(),
+           $video->getUrl(),
+           $video->getDescripcion(),
+           "categoria 1, categoria 2",
+           "usuario 1"
+        );
+
+        return $this->render('video/index.html.twig', [
+            'controller_name' => "Guarda el Video  ".$videoVista->getNombre(),
+            'video' => $videoVista,
              'mensage' => $this->oKKo
         ]);
      }
  
-     #[Route('/borrarVideo/{request,id}', name: 'borrarVideo')]
-     public function delete(Request $request): Response
-     {
-         $idRequest=$request->request->get('id');
-         // creamos obj Video
-         $video = new Video();
+    #[Route('/borrarVideo/{request,id}', name: 'borrarVideo')]
+    public function delete(Request $request): Response
+    {
+        $idRequest=$request->request->get('id');
+        // creamos obj Video
+        $video = new Video();
  
-         //recuperamos el video
-         $video = $this->em->getRepository(Video::class)->find($idRequest);
- 
-         //eliminamos la cita seleccionada
-         $this->em->remove($video);
-         $this->em->flush();
- 
-         // validamos que citas venga relleno
-         if (!$video) {
-             throw $this->createNotFoundException('No se encontró el video con el ID: '.$idRequest);
-         } 
- 
+        //recuperamos el video
+        $video = $this->em->getRepository(Video::class)->find($idRequest);
+
+        //TODO recuperamos las videoCategorias y las eliminamos
         
-         return $this->render('video/index.html.twig', [
-             'controller_name' => "Guarda el Video  ".$video->getNombre(),
-             'video' => $video,
-             'mensage' => $this->oKKo
+        //eliminamos la cita seleccionada
+        $this->em->remove($video);
+        $this->em->flush();
+ 
+        // validamos que citas venga relleno
+        if (!$video) {
+            throw $this->createNotFoundException('No se encontró el video con el ID: '.$idRequest);
+        } 
+ 
+        $videoVista = new VideoViewModel(0,"","","","",""); 
+        
+        return $this->render('video/index.html.twig', [
+            'controller_name' => "Guarda el Video  ".$videoVista->getNombre(),
+            'video' => $videoVista,
+            'mensage' => $this->oKKo
         ]);
-     }
+    }
+
+    public function findCategoriasPersonalizadas($someValue)
+    {
+        //SELECT u.* from video_categoria u WHERE u.video_Id = 25
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('u.categoria_id')
+           ->from('video_categoria', 'u')
+           ->where('u.videoId = :videoId')
+           ->setParameter('video_Id', 1);
+        
+    return $qb->getQuery()->getSingleResult();
+
+    }
 }
